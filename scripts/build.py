@@ -8,6 +8,8 @@ import json
 import shutil
 from pathlib import Path
 
+from optimize_images import optimize_dist, rewrite_refs
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "site.json"
 DIST = ROOT / "dist"
@@ -580,6 +582,9 @@ def build() -> None:
 """,
         encoding="utf-8",
     )
+
+    # Visually-lossless PNG -> JPEG in dist only (assets/ keeps the originals)
+    rewrite_refs(DIST, optimize_dist(DIST / "assets"))
 
     print(f"Built {DIST} ({len(site['projects'])} projects)")
 

@@ -4,3 +4,5 @@ data/*.html
 data/scrape.log
 .venv/
 benludp-portfolio/
+.cache/
+__pycache__/
