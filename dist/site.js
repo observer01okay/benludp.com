@@ -125,7 +125,8 @@ function initLightbox() {
     btn.setAttribute("aria-label", `Image ${i + 1}`);
     btn.dataset.lbIndex = String(i);
     const thumb = document.createElement("img");
-    thumb.src = img.currentSrc || img.src;
+    // Small build-time preview when available; full image as fallback
+    thumb.src = img.dataset.thumb || img.currentSrc || img.src;
     thumb.alt = "";
     thumb.loading = "lazy";
     btn.appendChild(thumb);

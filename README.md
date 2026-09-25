@@ -12,6 +12,16 @@ python3 scripts/serve.py    # http://127.0.0.1:8765 — supports video seeking (
 
 Do not use `python3 -m http.server` for local preview — it ignores byte ranges, so scrubbing local MP4s will not work.
 
+## Image optimization
+
+`build.py` shrinks photos for the web without visible loss (`scripts/optimize_images.py`). Originals in `assets/` are never changed — only `dist/` gets the web versions:
+
+- PNG photos become JPEGs at the lowest quality that still measures visually identical to the original (PSNR ≥ 46 dB, full color detail). Grainy frames keep a very high quality.
+- Photos wider than 2560px are scaled down to 2560px; very heavy JPEGs are re-encoded under the same rule.
+- Small previews for the lightbox strip are written to `dist/assets/_thumbs/`.
+
+It needs **ffmpeg** and **cjpeg** (`brew install ffmpeg jpeg-turbo`). Without them the build still works but ships full-size originals and prints a warning. Results are cached in `.cache/images/`, so rebuilds only process new or changed photos.
+
 ## Adding / editing films
 
 See **[EDITING.md](EDITING.md)**. Short version:
