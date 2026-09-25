@@ -35,6 +35,17 @@ META_KEYWORDS = (
 )
 
 
+# Image alt text: lets Google Images index the frames and screen readers describe them.
+PERSON = "Ben Nurhaci Lu"
+
+
+def film_alt(p: dict, i: int | None = None, n: int | None = None) -> str:
+    """e.g. 'Still from American Body (2023), cinematography by Ben Nurhaci Lu — frame 3 of 25'."""
+    year = f" ({p['year']})" if p.get("year") else ""
+    alt = f"Still from {p['title']}{year}, cinematography by {PERSON}"
+    return f"{alt} — frame {i} of {n}" if i and n and n > 1 else alt
+
+
 def esc(s: str) -> str:
     return (
         s.replace("&", "&amp;")
@@ -228,7 +239,7 @@ def build() -> None:
             continue
         cards.append(
             f"""<a class="work-card" href="projects/{esc(p['slug'])}.html">
-  <img src="{esc(thumb)}" alt="{esc(p['title'])}" loading="lazy" />
+  <img src="{esc(thumb)}" alt="{esc(film_alt(p))}" loading="lazy" />
   <span class="work-meta"><span class="work-title">{esc(p['title'])}</span><span class="work-year">{p['year']}</span></span>
 </a>"""
         )
@@ -316,9 +327,11 @@ def build() -> None:
     )
 
     # STILLS → /stills/
+    stills = site.get("stills", [])
     still_imgs = "\n".join(
-        f'<img src="{esc(asset_url(src))}" alt="" loading="lazy" />'
-        for src in site.get("stills", [])
+        f'<img src="{esc(asset_url(src))}" '
+        f'alt="Still photograph by {PERSON} — {i} of {len(stills)}" loading="lazy" />'
+        for i, src in enumerate(stills, 1)
     )
     stills_body = f'<section class="stills-stack">\n{still_imgs}\n</section>'
     write_clean_page(
@@ -345,7 +358,7 @@ def build() -> None:
         info_og = site["info_images"][0]
         info_img = (
             f'<img class="info-portrait" src="{esc(asset_url(site["info_images"][0]))}" '
-            f'alt="{esc(brand)}" />'
+            f'alt="Portrait of {PERSON}, cinematographer and director of photography" />'
         )
     info_body = f'<section class="info">\n{info_img}\n<div class="info-copy">{paras}</div>\n</section>'
     write_clean_page(
@@ -419,9 +432,10 @@ def build() -> None:
         aspect = p.get("aspect", "16 / 9")
         gap = p.get("grid_gap", "var(--gap)")
 
+        images = p.get("images", [])
         imgs = "".join(
-            f'<img src="{img_prefix}{esc(src)}" alt="" loading="lazy" />'
-            for src in p.get("images", [])
+            f'<img src="{img_prefix}{esc(src)}" alt="{esc(film_alt(p, i, len(images)))}" loading="lazy" />'
+            for i, src in enumerate(images, 1)
         )
         gallery = ""
         if imgs:
