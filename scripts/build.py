@@ -508,7 +508,7 @@ def build() -> None:
                         src = f"https://player.vimeo.com/video/{vid}?badge=0&autopause=0"
                     embeds.append(
                         f"""<div class="project-video">
-  <iframe src="{src}"
+  <iframe src="{src}" loading="lazy"
     allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
     title="{vtitle}"></iframe>
 </div>"""
