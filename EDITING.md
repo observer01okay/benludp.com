@@ -27,7 +27,7 @@ Optional: a promo `.mp4`, or a Vimeo / YouTube id.
 ### 2. Run the helper
 
 ```bash
-cd /Users/ben/Projects/benludp-portfolio
+cd /Users/ben/projects/benludp.com
 
 python3 scripts/add_project.py \
   --title "Night Drive" \
