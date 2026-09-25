@@ -224,22 +224,22 @@
       "grid_gap": "8px",
       "videos": [
         {
-          "provider": "local",
-          "src": "assets/videos/wabi-sabi-opening.mp4",
+          "id": "1230130029",
+          "hash": "be6b3d29cb",
           "title": "Wabi Sabi — Opening",
-          "poster": "assets/videos/posters/wabi-sabi-opening.jpg"
+          "provider": "vimeo"
         },
         {
-          "provider": "local",
-          "src": "assets/videos/wabi-sabi-steevie-gets-punched.mp4",
+          "id": "1230130644",
+          "hash": "96ced5e64a",
           "title": "Wabi Sabi — Steevie Gets Punched",
-          "poster": "assets/videos/posters/wabi-sabi-steevie-gets-punched.jpg"
+          "provider": "vimeo"
         },
         {
-          "provider": "local",
-          "src": "assets/videos/wabi-sabi-the-punch.mp4",
+          "id": "1230128066",
+          "hash": "720cd4bf0f",
           "title": "Wabi Sabi — The Punch",
-          "poster": "assets/videos/posters/wabi-sabi-the-punch.jpg"
+          "provider": "vimeo"
         }
       ],
       "awards_footer": "呂尚睿. 努爾哈赤",
@@ -677,10 +677,10 @@
       "layout": "stack",
       "videos": [
         {
-          "provider": "local",
-          "src": "assets/videos/scattered-over-night-promo.mp4",
+          "id": "1230131136",
+          "hash": "7660beade4",
           "title": "Scattered Over Night Promo",
-          "poster": "assets/videos/posters/scattered-over-night-promo.jpg"
+          "provider": "vimeo"
         }
       ],
       "awards_footer": "呂尚睿. 努爾哈赤",
@@ -699,13 +699,10 @@
       "layout": "stack",
       "videos": [
         {
-          "provider": "local",
-          "src": "assets/videos/black-friday-promo.mp4",
+          "id": "1230132875",
+          "hash": "b352a4d8d2",
           "title": "Black Friday Promo",
-          "poster": "assets/videos/posters/black-friday-promo.jpg",
-          "aspect": "16 / 9",
-          "object_fit": "cover",
-          "object_position": "50% 42.2%"
+          "provider": "vimeo"
         }
       ],
       "awards_footer": "呂尚睿. 努爾哈赤",

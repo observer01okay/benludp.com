@@ -225,7 +225,16 @@ def build() -> None:
     # Copy assets into dist
     assets_src = ROOT / "assets"
     if assets_src.exists():
-        shutil.copytree(assets_src, DIST / "assets")
+        # Videos are large: ship only the local clips (and posters) a project still uses
+        shutil.copytree(assets_src, DIST / "assets", ignore=shutil.ignore_patterns("videos"))
+        for p in site["projects"]:
+            for v in p.get("videos", []):
+                if v.get("provider") != "local":
+                    continue
+                for rel in (v.get("src"), v.get("poster")):
+                    if rel:
+                        (DIST / rel).parent.mkdir(parents=True, exist_ok=True)
+                        shutil.copy2(ROOT / rel, DIST / rel)
 
     brand = site["brand"]
     private_hash = pwd_hash(site.get("private_password", "private"))
@@ -505,7 +514,9 @@ def build() -> None:
                     if provider == "youtube":
                         src = f"https://www.youtube.com/embed/{vid}"
                     else:
-                        src = f"https://player.vimeo.com/video/{vid}?badge=0&autopause=0"
+                        # Unlisted Vimeo videos need their privacy hash (the part after the id in the share link)
+                        h = f"&h={esc(v['hash'])}" if v.get("hash") else ""
+                        src = f"https://player.vimeo.com/video/{vid}?badge=0&autopause=0{h}"
                     embeds.append(
                         f"""<div class="project-video">
   <iframe src="{src}" loading="lazy"
