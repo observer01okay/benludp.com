@@ -35,6 +35,24 @@ META_KEYWORDS = (
 )
 
 
+AI_TRAINING_BOTS = (
+    "GPTBot",
+    "ClaudeBot",
+    "anthropic-ai",
+    "Google-Extended",
+    "Google-CloudVertexBot",
+    "Applebot-Extended",
+    "CCBot",
+    "Bytespider",
+    "Amazonbot",
+    "meta-externalagent",
+    "cohere-ai",
+    "MistralAI-Training",
+    "Diffbot",
+    "omgili",
+)
+
+
 # Image alt text: lets Google Images index the frames and screen readers describe them.
 PERSON = "Ben Nurhaci Lu"
 
@@ -585,8 +603,14 @@ def build() -> None:
         if not old.exists() and not (DIST / slug).exists():
             write_redirect(old, target)
 
+    # Ask AI-training crawlers to stay out. Search crawlers (Googlebot, Bingbot) and
+    # AI assistants that answer questions (ChatGPT-User, PerplexityBot…) stay allowed.
+    # Never block these at Cloudflare instead: its "Block AI training crawlers" rule
+    # also 403s Googlebot, which removed the site from Google in Sep–Oct 2026.
+    # Google-Extended / Applebot-Extended opt out of AI training without affecting search.
+    ai_block = "".join(f"User-agent: {bot}\n" for bot in AI_TRAINING_BOTS) + "Disallow: /\n"
     (DIST / "robots.txt").write_text(
-        f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n",
+        f"User-agent: *\nAllow: /\n\n{ai_block}\nSitemap: {SITE_URL}/sitemap.xml\n",
         encoding="utf-8",
     )
     urls = [
