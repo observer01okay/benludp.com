@@ -677,10 +677,10 @@
       "layout": "stack",
       "videos": [
         {
-          "id": "1230131136",
-          "hash": "7660beade4",
+          "provider": "local",
+          "src": "assets/videos/scattered-over-night-promo.mp4",
           "title": "Scattered Over Night Promo",
-          "provider": "vimeo"
+          "poster": "assets/videos/posters/scattered-over-night-promo.jpg"
         }
       ],
       "awards_footer": "呂尚睿. 努爾哈赤",
@@ -699,10 +699,13 @@
       "layout": "stack",
       "videos": [
         {
-          "id": "1230132875",
-          "hash": "b352a4d8d2",
+          "provider": "local",
+          "src": "assets/videos/black-friday-promo.mp4",
           "title": "Black Friday Promo",
-          "provider": "vimeo"
+          "poster": "assets/videos/posters/black-friday-promo.jpg",
+          "aspect": "16 / 9",
+          "object_fit": "cover",
+          "object_position": "50% 42.2%"
         }
       ],
       "awards_footer": "呂尚睿. 努爾哈赤",
