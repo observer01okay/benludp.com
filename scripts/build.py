@@ -576,6 +576,15 @@ def build() -> None:
         write_external_redirect(link["slug"], link["url"], link.get("title", "Redirecting…"))
 
     # SEO: robots.txt + sitemap.xml
+    # Old Adobe Portfolio addresses (benludp.com/<film>, /work, /stills-for-website)
+    # still sit in Google and old links; forward them instead of showing "not found".
+    legacy = {p["slug"]: f"/projects/{p['slug']}.html" for p in site["projects"]}
+    legacy.update({"work": "/", "stills-for-website": "/stills/"})
+    for slug, target in legacy.items():
+        old = DIST / f"{slug}.html"
+        if not old.exists() and not (DIST / slug).exists():
+            write_redirect(old, target)
+
     (DIST / "robots.txt").write_text(
         f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n",
         encoding="utf-8",
